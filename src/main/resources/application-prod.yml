@@ -1,0 +1,16 @@
+server:
+  port: 443
+  ssl:
+    key-alias: alias
+    key-store-password: 0l4jants
+    key-store-type: PKCS12
+    key-store: classpath:lqcpw.shinrun.cn.pfx
+
+spring:
+  datasource:
+    url: jdbc:mysql://120.77.144.6:3307/book?useUnicode=true&characterEncoding=utf-8&isSSL=false
+    username: root
+    password: root
+
+book:
+  api-prefix: api/v1

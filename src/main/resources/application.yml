@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: account-book
+  jpa:
+    show-sql: true
+    open-in-view: false
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+
+book:
+  wx-applet:
+    app-id: wx2e5dd033b02ef757
+    app-secret: 41fc45c9be70dff8b07b1c618896b526
