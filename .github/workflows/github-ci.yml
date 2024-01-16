@@ -11,10 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
+        # github自带的action
         uses: actions/checkout@v2
 
       - name: Set up JDK
         uses: actions/setup-java@v2
+        # 添加参数 adopt发行的17版本
         with:
           distribution: 'adopt'
           java-version: '17'
