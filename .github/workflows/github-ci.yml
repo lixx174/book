@@ -1,9 +1,9 @@
-name: CI/CD with GitHub Actions for Spring Boot
+name: Build and Test
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -11,44 +11,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        # github自带的action
         uses: actions/checkout@v2
 
       - name: Set up JDK
         uses: actions/setup-java@v2
-        # 添加参数 adopt发行的17版本
         with:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Set execute permissions for Gradle Wrapper
-        run: chmod +x ./gradlew
-
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew build
 
-      - name: Build Docker image
-        run: docker build -t your-docker-username/your-app-name:latest .
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Push Docker image
-        run: |
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker push your-docker-username/your-app-name:latest
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-  deploy:
-    runs-on: ubuntu-latest
-
-    needs: build
-
-    steps:
-      - name: Deploy to production
-        run: |
-          ssh your-server-user@your-server-ip 'docker-compose pull && docker-compose up -d'
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Run tests
+        run: ./gradlew test
